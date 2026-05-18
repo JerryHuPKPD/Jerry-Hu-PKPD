@@ -1,0 +1,14 @@
+# R / RMarkdown / Quarto source files — kept out of repo by request
+*.Rmd
+*.qmd
+
+# R working files
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
