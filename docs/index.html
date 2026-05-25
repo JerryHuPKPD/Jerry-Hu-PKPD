@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jerry Hu — PK/PD Portfolio</title>
+  <style>
+    :root {
+      --fg: #1a1a1a;
+      --muted: #5a5a5a;
+      --accent: #2563eb;
+      --rule: #e5e5e5;
+      --bg: #fafafa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.55;
+      margin: 0;
+      padding: 3rem 1.25rem;
+    }
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.01em;
+    }
+    .tagline {
+      color: var(--muted);
+      margin: 0 0 2rem 0;
+      font-size: 1rem;
+    }
+    h2 {
+      font-size: 1.1rem;
+      margin: 2.25rem 0 0.75rem 0;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--rule);
+      font-weight: 600;
+    }
+    ul.projects {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    ul.projects li {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    ul.projects li:last-child { border-bottom: none; }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    a:hover { text-decoration: underline; }
+    .desc {
+      color: var(--muted);
+      font-size: 0.93rem;
+      margin-top: 0.15rem;
+    }
+    .placeholder {
+      color: var(--muted);
+      font-style: italic;
+    }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Jerry Hu — PK/PD Portfolio</h1>
+    <p class="tagline">Self-contained pharmacokinetic / pharmacodynamic demonstrations. Each entry answers one question end-to-end: simulate, analyze, publish.</p>
+
+    <h2>Subprojects</h2>
+    <ul class="projects">
+      <li class="placeholder">
+        <strong>pk-sampling-sim</strong> &mdash; <span>coming soon</span>
+        <div class="desc">Optimal PK sampling design via Monte Carlo simulation.</div>
+      </li>
+    </ul>
+
+    <h2>Workflow tests</h2>
+    <ul class="projects">
+      <li>
+        <a href="test/TEST.html">PHMX666 Communications Assignment 2</a>
+        <div class="desc">First end-to-end test of the Pages publishing workflow. Population PK analysis with covariate model — not part of the portfolio proper.</div>
+      </li>
+    </ul>
+
+    <footer>
+      Source: <a href="https://github.com/JerryHuPKPD/Jerry-Hu-PKPD">github.com/JerryHuPKPD/Jerry-Hu-PKPD</a>
+    </footer>
+  </div>
+</body>
+</html>
