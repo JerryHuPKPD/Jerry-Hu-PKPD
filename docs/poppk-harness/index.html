@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>popPK Parameter- AI Harness - Jerry Hu PK/PD</title>
+  <style>
+    :root {
+      --fg: #1a1a1a;
+      --muted: #5a5a5a;
+      --accent: #2563eb;
+      --rule: #e5e5e5;
+      --bg: #fafafa;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.65;
+      margin: 0;
+      padding: 3rem 1.25rem;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; }
+    .home {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    h1 {
+      font-size: 1.9rem;
+      margin: 0 0 0.25rem 0;
+      letter-spacing: -0.01em;
+    }
+    .lead {
+      color: var(--muted);
+      margin: 0 0 0.35rem 0;
+      font-size: 1.05rem;
+    }
+    .updated {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin: 0 0 2.25rem 0;
+    }
+    .banner {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: #7c2d12;
+      margin: 0 0 2.25rem 0;
+    }
+    h2 {
+      font-size: 1.25rem;
+      margin: 2.5rem 0 0.85rem 0;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--rule);
+      font-weight: 600;
+    }
+    h3 {
+      font-size: 1.02rem;
+      margin: 1.75rem 0 0.4rem 0;
+      font-weight: 600;
+    }
+    p { margin: 0 0 1rem 0; }
+    ul { margin: 0 0 1rem 0; padding-left: 1.25rem; }
+    ul li { margin: 0.35rem 0; }
+    ol.stages {
+      list-style: none;
+      counter-reset: stage -1;
+      margin: 0;
+      padding: 0;
+    }
+    ol.stages > li {
+      counter-increment: stage;
+      position: relative;
+      padding: 0.6rem 0 0.6rem 3.4rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    ol.stages > li:last-child { border-bottom: none; }
+    ol.stages > li::before {
+      content: "Stage " counter(stage);
+      position: absolute;
+      left: 0;
+      top: 0.62rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    ol.stages > li.outscope::before { color: var(--muted); }
+    .stage-name { font-weight: 600; }
+    .stage-note { color: var(--muted); }
+    a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    a:hover { text-decoration: underline; }
+    strong { font-weight: 700; }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--muted); }
+
+    /* Staircase diagram */
+    .diagram-wrap { margin: 1.5rem 0 2rem; }
+    .diagram-wrap svg { display: block; width: 100%; max-width: 100%; height: auto; }
+    .diagram-wrap text { font-family: inherit; }
+    .stage-label    { font-size: 13.5px; font-weight: 600; }
+    .stage-desc     { font-size: 11px; }
+    .badge-text     { font-size: 9px; font-weight: 700; letter-spacing: 0.04em; }
+    .substage-title { font-size: 11px; font-weight: 600; }
+    .substage-desc  { font-size: 10px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="home" href="../">&larr; PK/PD Portfolio &mdash; Home</a>
+
+    <h1>Exploring the Limits of AI-Powered Population Pharmacokinetic Analyses</h1>
+    <p class="lead">How well can AI fit a population PK model?</p>
+    <p class="updated">(last updated 2026-06-07)</p>
+
+    <div class="banner">
+      <strong>Design in progress.</strong> This page presents the big picture and
+      the planned staging. The fitting runs themselves have not started.
+    </div>
+
+<!-- INTRODUCTION -->
+  <h2>Introduction</h2>
+
+  <p>Large language models (LLMs) — a class of artificial intelligence (AI) trained on vast bodies of text — represent a meaningful shift in how complex, knowledge-intensive tasks can be approached. These AI models demonstrate broad reasoning ability, can synthesize information across domains, and communicate outputs in natural language. However, their limitations are equally important to understand: they are prone to confident but incorrect outputs (hallucination), may lack persistent memory across sessions, and operate within a finite context window that constrains how much information they can actively reason over at once.</p>
+
+  <p>The limitations described above — hallucination, finite context, and lack of persistent memory — are not unique to any one model, but they are particularly consequential when applying AI models to structured scientific tasks. An AI harness is a framework designed to address exactly these constraints. The concept is perhaps best understood through an analogy: a horse is powerful, but without a harness it cannot be reliably directed. The harness does not make the horse more capable — it makes that capability more attuned to the rider. In the same way, a well-designed AI harness does not enhance the AI model's intelligence, but focuses it to the specifics of the problem at hand. The user works through the harness to interact with the model — setting the destination, providing the data, and exercising judgment at key decision points.</p>
+
+  <p>Population pharmacokinetic (popPK) modeling characterizes how a drug moves through the body across a diverse patient population, estimating both typical drug behavior and the sources of variability. Conducting a popPK analysis is a highly iterative process: raw concentration data must be prepared and quality-checked, a structural model selected and fit to the data, diagnostic outputs evaluated and used to guide refinement, and findings communicated in a structured report — each step dependent on the one before it, and rarely linear in practice. An unaided AI model is poorly suited to this workflow: context accumulated early in the analysis may be lost or degraded by the time later steps are reached, hallucinations in intermediate outputs can propagate silently into final results, and without enforced structure there is no guarantee the model will follow the correct analytical path. A popPK-focused AI harness is designed to address these failure modes — breaking the analysis into defined stages, managing what the model attends to at each step, and creating checkpoints where the analyst can verify outputs before proceeding.</p>
+
+  <p>This work describes the development and evaluation of a popPK-focused AI harness built around Claude, Anthropic's large language model, and tested against simulated datasets representing a realistic popPK workflow. The harness was designed around a standard pharmacometric workflow (i.e., data exploration, model building, and diagnostics) then stress-tested against scenarios of increasing complexity. Ultimately, the purpose is to explore the limits of AI in popPK analyses.</p>
+
+  <!-- METHODS -->
+  <h2>Methods</h2>
+
+  <h3>Harness Design</h3>
+
+  <p>The harness was developed as a framework built around two Claude models, Claude Opus v4.8, and Claude Sonnet v4.6. The harness defines the analytical workflow, manages what information Claude attends to at each step, enforces output structure, and creates verification checkpoints before proceeding. Performance was evaluated against simulated datasets with known true parameter values. Following each iteration, Claude documents where it struggled and the harness is modified accordingly before the next iteration begins.</p>
+
+  <h3>Development Staging</h3>
+
+  <p>The evaluation was structured as a progression of stages, each adding exactly one new analytical demand to isolate where performance degrades and why. All stages used simulated datasets. Stage 0 served as the unaided baseline — Claude was given a Stage 5-level task with no harness, establishing the performance floor. Stage 1 built the full pharmacometric workflow on clean, idealized data with model structure provided, spanning non-compartmental analysis, structural model estimation, random effects, covariate modeling, and evaluation. Stage 2 introduced data realism, exposing the harness to noisy, incomplete data while holding model complexity constant. Stage 3 increased model complexity, requiring Claude to fit more demanding structural models while structure remained given. Stage 4 introduced structure discovery — the model form was no longer provided, requiring Claude to identify the correct model independently. Stage 5 used published pharmacokinetic models as the simulated truth. The diagram below illustrates the full progression from the unaided baseline through Stage 5.</p>
+
+  <!-- DIAGRAM -->
+  <div class="diagram-wrap">
+    <svg width="100%" viewBox="0 0 640 780" role="img" xmlns="http://www.w3.org/2000/svg">
+      <title>popPK harness stage progression</title>
+      <desc>Vertical staircase showing six stages of increasing complexity, Stage 0 at top through Stage 5 at bottom, with Stage 1 expanded into substages 1a through 1e.</desc>
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- STAGE 0 — coral -->
+      <g class="stage-box">
+        <rect x="42" y="30" width="310" height="62" rx="6" fill="#c04828"/>
+        <text class="stage-label" x="197" y="53" text-anchor="middle" fill="#fff">Stage 0 — Unaided Baseline</text>
+        <text class="stage-desc" x="197" y="72" text-anchor="middle" fill="rgba(255,255,255,0.82)">Data: noisy  |  Model: complex  |  Structure: unknown</text>
+      </g>
+      <!-- Baseline badge -->
+      <rect x="362" y="44" width="72" height="20" rx="10" fill="#c04828"/>
+      <text class="badge-text" x="398" y="58" text-anchor="middle" fill="rgba(255,255,255,0.9)">BASELINE</text>
+
+      <!-- Arrow 0→1 -->
+      <line x1="197" y1="92" x2="197" y2="116" stroke="#d4d0c8" stroke-width="1" marker-end="url(#arr)"/>
+
+      <!-- STAGE 1 — purple -->
+      <g class="stage-box">
+        <rect x="42" y="116" width="310" height="62" rx="6" fill="#534AB7"/>
+        <text class="stage-label" x="197" y="139" text-anchor="middle" fill="#fff">Stage 1 — Build Pharmacometric Workflow</text>
+        <text class="stage-desc" x="197" y="158" text-anchor="middle" fill="rgba(255,255,255,0.82)">Data: clean  |  Model: simple  |  Structure: given</text>
+      </g>
+
+      <!-- Substage connector -->
+      <line x1="352" y1="147" x2="400" y2="147" stroke="#d4d0c8" stroke-width="0.75" stroke-dasharray="3 3"/>
+
+      <!-- Substage panel -->
+      <rect x="400" y="90" width="220" height="270" rx="6" fill="#534AB7" opacity="0.12"/>
+      <rect x="400" y="90" width="220" height="270" rx="6" fill="none" stroke="#534AB7" stroke-width="0.75" stroke-dasharray="4 3"/>
+      <text class="substage-title" x="510" y="112" text-anchor="middle" fill="#534AB7">Substages</text>
+
+      <!-- 1a -->
+      <rect x="414" y="122" width="192" height="42" rx="4" fill="#534AB7" opacity="0.15"/>
+      <text class="substage-title" x="510" y="139" text-anchor="middle" fill="#3C3489">1a — NCA + Exploratory Analysis</text>
+      <text class="substage-desc" x="510" y="155" text-anchor="middle" fill="#5a5580">Data exploration</text>
+
+      <!-- 1b -->
+      <rect x="414" y="170" width="192" height="42" rx="4" fill="#534AB7" opacity="0.15"/>
+      <text class="substage-title" x="510" y="187" text-anchor="middle" fill="#3C3489">1b — Structural model</text>
+      <text class="substage-desc" x="510" y="203" text-anchor="middle" fill="#5a5580">Parameter estimation</text>
+
+      <!-- 1c -->
+      <rect x="414" y="218" width="192" height="42" rx="4" fill="#534AB7" opacity="0.15"/>
+      <text class="substage-title" x="510" y="235" text-anchor="middle" fill="#3C3489">1c — Random effects</text>
+      <text class="substage-desc" x="510" y="251" text-anchor="middle" fill="#5a5580">Inter-individual variability</text>
+
+      <!-- 1d -->
+      <rect x="414" y="266" width="192" height="42" rx="4" fill="#534AB7" opacity="0.15"/>
+      <text class="substage-title" x="510" y="283" text-anchor="middle" fill="#3C3489">1d — Covariate model</text>
+      <text class="substage-desc" x="510" y="299" text-anchor="middle" fill="#5a5580">Covariate effects</text>
+
+      <!-- 1e -->
+      <rect x="414" y="314" width="192" height="42" rx="4" fill="#534AB7" opacity="0.15"/>
+      <text class="substage-title" x="510" y="331" text-anchor="middle" fill="#3C3489">1e — Evaluation</text>
+      <text class="substage-desc" x="510" y="347" text-anchor="middle" fill="#5a5580">Diagnostics + reporting</text>
+
+      <!-- Arrow 1→2 -->
+      <line x1="197" y1="178" x2="197" y2="390" stroke="#d4d0c8" stroke-width="1" marker-end="url(#arr)"/>
+
+      <!-- STAGE 2 — teal -->
+      <g class="stage-box">
+        <rect x="80" y="390" width="310" height="62" rx="6" fill="#0F6E56"/>
+        <text class="stage-label" x="235" y="413" text-anchor="middle" fill="#fff">Stage 2 — Data Realism</text>
+        <text class="stage-desc" x="235" y="432" text-anchor="middle" fill="rgba(255,255,255,0.82)">Data: noisy  |  Model: simple  |  Structure: given</text>
+      </g>
+
+      <!-- Arrow 2→3 -->
+      <line x1="235" y1="452" x2="235" y2="490" stroke="#d4d0c8" stroke-width="1" marker-end="url(#arr)"/>
+
+      <!-- STAGE 3 — teal -->
+      <g class="stage-box">
+        <rect x="118" y="490" width="310" height="62" rx="6" fill="#0F6E56"/>
+        <text class="stage-label" x="273" y="513" text-anchor="middle" fill="#fff">Stage 3 — Structural Complexity</text>
+        <text class="stage-desc" x="273" y="532" text-anchor="middle" fill="rgba(255,255,255,0.82)">Data: noisy  |  Model: complex  |  Structure: given</text>
+      </g>
+
+      <!-- Arrow 3→4 -->
+      <line x1="273" y1="552" x2="273" y2="590" stroke="#d4d0c8" stroke-width="1" marker-end="url(#arr)"/>
+
+      <!-- STAGE 4 — teal -->
+      <g class="stage-box">
+        <rect x="156" y="590" width="310" height="62" rx="6" fill="#0F6E56"/>
+        <text class="stage-label" x="311" y="613" text-anchor="middle" fill="#fff">Stage 4 — Structure Discovery</text>
+        <text class="stage-desc" x="311" y="632" text-anchor="middle" fill="rgba(255,255,255,0.82)">Data: noisy  |  Model: complex  |  Structure: unknown</text>
+      </g>
+
+      <!-- Arrow 4→5 -->
+      <line x1="311" y1="652" x2="311" y2="690" stroke="#d4d0c8" stroke-width="1" marker-end="url(#arr)"/>
+
+      <!-- STAGE 5 — amber -->
+      <g class="stage-box">
+        <rect x="194" y="690" width="310" height="62" rx="6" fill="#854F0B"/>
+        <text class="stage-label" x="349" y="713" text-anchor="middle" fill="#fff">Stage 5 — Published Models</text>
+        <text class="stage-desc" x="349" y="732" text-anchor="middle" fill="rgba(255,255,255,0.82)">Data: noisy  |  Model: complex  |  Structure: unknown</text>
+      </g>
+
+    </svg>
+  </div>
+
+    <footer>
+      <a href="../">&larr; Back to the PK/PD Portfolio</a><br>
+      Contact me at <a href="mailto:jerryhupharm@gmail.com">jerryhupharm@gmail.com</a>
+    </footer>
+  </div>
+</body>
+</html>
