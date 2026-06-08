@@ -115,6 +115,15 @@
     .badge-text     { font-size: 9px; font-weight: 700; letter-spacing: 0.04em; }
     .substage-title { font-size: 11px; font-weight: 600; }
     .substage-desc  { font-size: 10px; }
+    .ramp-label     { font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
+
+    /* References */
+    sup { line-height: 0; }
+    sup a { font-weight: 600; }
+    .references { font-size: 0.85rem; color: var(--muted); }
+    .references ol { margin: 0; padding-left: 1.5rem; }
+    .references li { margin: 0.4rem 0; }
+    .references a { word-break: break-word; }
   </style>
 </head>
 <body>
@@ -133,11 +142,11 @@
 <!-- INTRODUCTION -->
   <h2>Introduction</h2>
 
-  <p>Large language models (LLMs) — a class of artificial intelligence (AI) trained on vast bodies of text — represent a meaningful shift in how complex, knowledge-intensive tasks can be approached. These AI models demonstrate broad reasoning ability, can synthesize information across domains, and communicate outputs in natural language. However, their limitations are equally important to understand: they are prone to confident but incorrect outputs (hallucination), may lack persistent memory across sessions, and operate within a finite context window that constrains how much information they can actively reason over at once.</p>
+  <p><a href="https://platform.claude.com/docs/en/about-claude/models/overview">Large language models (LLMs)</a><sup><a href="#ref1">1</a></sup> — a class of artificial intelligence (AI) trained on vast bodies of text — represent a meaningful shift in how complex, knowledge-intensive tasks can be approached. These AI models demonstrate broad reasoning ability, can synthesize information across domains, and communicate outputs in natural language. However, their limitations are equally important to understand: they are prone to incorrect outputs (including <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">hallucinations</a><sup><a href="#ref2">2</a></sup>), may have limited <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">persistent memory</a><sup><a href="#ref3">3</a></sup> across sessions, and operate within a finite <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">context window</a><sup><a href="#ref4">4</a></sup> that constrains how much information they can actively reason over at once.</p>
 
-  <p>The limitations described above — hallucination, finite context, and lack of persistent memory — are not unique to any one model, but they are particularly consequential when applying AI models to structured scientific tasks. An AI harness is a framework designed to address exactly these constraints. The concept is perhaps best understood through an analogy: a horse is powerful, but without a harness it cannot be reliably directed. The harness does not make the horse more capable — it makes that capability more attuned to the rider. In the same way, a well-designed AI harness does not enhance the AI model's intelligence, but focuses it to the specifics of the problem at hand. The user works through the harness to interact with the model — setting the destination, providing the data, and exercising judgment at key decision points.</p>
+  <p>The limitations described above — hallucination, finite context, and limited persistent memory — are not unique to any one model, but they are particularly consequential when applying AI models to structured scientific tasks. An <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">AI harness</a><sup><a href="#ref5">5</a></sup> is a framework designed to address exactly these constraints. The concept is perhaps best understood through an analogy: a horse is powerful, but without a harness it cannot be reliably directed. The harness does not make the horse more capable — it makes that capability more attuned to the rider. In the same way, a well-designed AI harness does not enhance the AI model's intelligence, but focuses it to the specifics of the problem at hand. The user works through the harness to interact with the model — setting the destination, providing the data, and exercising judgment at key decision points.</p>
 
-  <p>Population pharmacokinetic (popPK) modeling characterizes how a drug moves through the body across a diverse patient population, estimating both typical drug behavior and the sources of variability. Conducting a popPK analysis is a highly iterative process: raw concentration data must be prepared and quality-checked, a structural model selected and fit to the data, diagnostic outputs evaluated and used to guide refinement, and findings communicated in a structured report — each step dependent on the one before it, and rarely linear in practice. An unaided AI model is poorly suited to this workflow: context accumulated early in the analysis may be lost or degraded by the time later steps are reached, hallucinations in intermediate outputs can propagate silently into final results, and without enforced structure there is no guarantee the model will follow the correct analytical path. A popPK-focused AI harness is designed to address these failure modes — breaking the analysis into defined stages, managing what the model attends to at each step, and creating checkpoints where the analyst can verify outputs before proceeding.</p>
+  <p>Population pharmacokinetic (popPK) modeling characterizes how a drug moves through the body across a diverse patient population, estimating both typical drug behavior and the sources of variability. Conducting a popPK analysis is a highly iterative process: raw concentration data must be prepared and quality-checked, a structural and covariate model fitted to the data, diagnostic outputs evaluated and used to guide refinement, and findings communicated in a structured report — each step dependent on the one before it, and rarely linear in practice. An unaided AI model is poorly suited to this workflow: context accumulated early in the analysis may be lost or degraded by the time later steps are reached, hallucinations in intermediate outputs can spread into final results, and without enforced structure there is no guarantee the model will follow the correct analytical path. A popPK-focused AI harness is designed to address these failure modes — breaking the analysis into defined stages, managing what the model attends to at each step, and creating checkpoints where the analyst can verify outputs before proceeding.</p>
 
   <p>This work describes the development and evaluation of a popPK-focused AI harness built around Claude, Anthropic's large language model, and tested against simulated datasets representing a realistic popPK workflow. The harness was designed around a standard pharmacometric workflow (i.e., data exploration, model building, and diagnostics) then stress-tested against scenarios of increasing complexity. Ultimately, the purpose is to explore the limits of AI in popPK analyses.</p>
 
@@ -146,17 +155,17 @@
 
   <h3>Harness Design</h3>
 
-  <p>The harness was developed as a framework built around two Claude models, Claude Opus v4.8, and Claude Sonnet v4.6. The harness defines the analytical workflow, manages what information Claude attends to at each step, enforces output structure, and creates verification checkpoints before proceeding. Performance was evaluated against simulated datasets with known true parameter values. Following each iteration, Claude documents where it struggled and the harness is modified accordingly before the next iteration begins.</p>
+  <p>The harness is being developed as a framework built around two <a href="https://platform.claude.com/docs/en/about-claude/models/overview">Claude models</a><sup><a href="#ref1">1</a></sup>, Claude Opus 4.8 and Claude Sonnet 4.6. The harness will define the analytical workflow, manage what information Claude attends to at each step, enforce output structure, and create verification checkpoints before proceeding. Performance will be evaluated against simulated datasets with known true parameter values. Following each iteration, Claude will document where it struggled, and the harness will be modified accordingly before the next iteration begins.</p>
 
   <h3>Development Staging</h3>
 
-  <p>The evaluation was structured as a progression of stages, each adding exactly one new analytical demand to isolate where performance degrades and why. All stages used simulated datasets. Stage 0 served as the unaided baseline — Claude was given a Stage 5-level task with no harness, establishing the performance floor. Stage 1 built the full pharmacometric workflow on clean, idealized data with model structure provided, spanning non-compartmental analysis, structural model estimation, random effects, covariate modeling, and evaluation. Stage 2 introduced data realism, exposing the harness to noisy, incomplete data while holding model complexity constant. Stage 3 increased model complexity, requiring Claude to fit more demanding structural models while structure remained given. Stage 4 introduced structure discovery — the model form was no longer provided, requiring Claude to identify the correct model independently. Stage 5 used published pharmacokinetic models as the simulated truth. The diagram below illustrates the full progression from the unaided baseline through Stage 5.</p>
+  <p>The evaluation will be structured as a progression of stages, each adding exactly one new analytical demand to isolate where performance degrades and why. All stages 0 through 5 will use simulated datasets. Stage 0 will serve as the unaided baseline — Claude will be given a Stage 5-level task with no harness, establishing the performance floor. Stage 1 will build the full pharmacometric workflow on clean, idealized data with model structure provided, spanning non-compartmental analysis, structural model estimation, random effects, covariate modeling, and evaluation. Stage 2 will introduce data realism, exposing the harness to noisy, incomplete data while holding model complexity constant. Stage 3 will increase model complexity, requiring Claude to fit more demanding structural models while structure remains given. Stage 4 will introduce structure discovery — the model form will no longer be provided, requiring Claude to identify the correct model independently. Stage 5 will simulate from published pharmacokinetic models as the true, data-generating model. The diagram below illustrates the full progression from the unaided baseline through Stage 5.</p>
 
   <!-- DIAGRAM -->
   <div class="diagram-wrap">
     <svg width="100%" viewBox="0 0 640 780" role="img" xmlns="http://www.w3.org/2000/svg">
       <title>popPK harness stage progression</title>
-      <desc>Vertical staircase showing six stages of increasing complexity, Stage 0 at top through Stage 5 at bottom, with Stage 1 expanded into substages 1a through 1e.</desc>
+      <desc>Vertical staircase showing six stages of increasing complexity, Stage 0 at top through Stage 5 at bottom, with Stage 1 expanded into substages 1a through 1e. A downward arrow labelled "Increasing difficulty" runs alongside the data-realism stages (2 through 4).</desc>
       <defs>
         <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
           <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -255,9 +264,27 @@
         <text class="stage-label" x="349" y="713" text-anchor="middle" fill="#fff">Stage 5 — Published Models</text>
         <text class="stage-desc" x="349" y="732" text-anchor="middle" fill="rgba(255,255,255,0.82)">Data: noisy  |  Model: complex  |  Structure: unknown</text>
       </g>
+      <!-- Final badge -->
+      <rect x="514" y="704" width="56" height="20" rx="10" fill="#854F0B"/>
+      <text class="badge-text" x="542" y="718" text-anchor="middle" fill="rgba(255,255,255,0.9)">FINAL</text>
+
+      <!-- Increasing-difficulty axis (diagonal, parallel to the green staircase) -->
+      <line x1="485" y1="398" x2="579" y2="646" stroke="#0F6E56" stroke-width="2" marker-end="url(#arr)"/>
+      <text class="ramp-label" x="500" y="522" text-anchor="middle" fill="#0F6E56" transform="rotate(69.2 500 522)">Increasing difficulty</text>
 
     </svg>
   </div>
+
+    <h2>References</h2>
+    <div class="references">
+      <ol>
+        <li id="ref1">Anthropic. Models overview. Claude Docs. Accessed June 7, 2026. <a href="https://platform.claude.com/docs/en/about-claude/models/overview">https://platform.claude.com/docs/en/about-claude/models/overview</a></li>
+        <li id="ref2">Anthropic. Reduce hallucinations. Claude Docs. Accessed June 7, 2026. <a href="https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations">https://platform.claude.com/docs/en/test-and-evaluate/strengthen-guardrails/reduce-hallucinations</a></li>
+        <li id="ref3">Anthropic. Memory tool. Claude Docs. Accessed June 7, 2026. <a href="https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool">https://platform.claude.com/docs/en/agents-and-tools/tool-use/memory-tool</a></li>
+        <li id="ref4">Anthropic. Context windows. Claude Docs. Accessed June 7, 2026. <a href="https://platform.claude.com/docs/en/build-with-claude/context-windows">https://platform.claude.com/docs/en/build-with-claude/context-windows</a></li>
+        <li id="ref5">Anthropic. Effective harnesses for long-running agents. Anthropic Engineering. Accessed June 7, 2026. <a href="https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents">https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents</a></li>
+      </ol>
+    </div>
 
     <footer>
       <a href="../">&larr; Back to the PK/PD Portfolio</a><br>
