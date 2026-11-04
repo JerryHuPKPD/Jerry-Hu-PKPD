@@ -3004,9 +3004,10 @@ margin: 0.8rem 0 1.2rem 0; border-radius: 4px; }
 <h1><span class="header-section-number">1</span> Summary</h1>
 <p><strong>Background.</strong> Choosing the sampling times that define
 the terminal elimination phase is a routine NCA decision. This study
-compares deterministic algorithms with an LLM at selecting the points
-that define the distribution and terminal phases of an oral
-two-compartment profile.</p>
+compares the ability of deterministic algorithms and an LLM to select
+the points that define the distribution and terminal phases across a
+planned series of PK profiles, starting with an oral two-compartment
+profile.</p>
 <p><strong>Methods.</strong> Concentration–time data for 24 subjects
 were simulated from a two-compartment model with first-order oral
 absorption, between-subject variability and residual error (mrgsolve).
@@ -3018,8 +3019,7 @@ selection closest to each subject’s true half-lives. One shared
 estimator computed t½,λz and t½,α from every selection. Each phase of
 each subject was scored correct or incorrect: correct if it was reported
 within ±20% of the true half-life where such a selection existed, or
-declined where none did. These are the results of scenario 1 in a
-planned series of scenarios.</p>
+declined where none did.</p>
 <p><strong>Results.</strong> Over both phases, the designed algorithm
 made 83.3% correct decisions and the simple algorithm 66.7%. The LLM
 with the short prompt scored 62.5%. The best-fit rule, which selects the
