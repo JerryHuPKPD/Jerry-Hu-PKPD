@@ -52,6 +52,7 @@
       color: #7c2d12;
       margin: 0 0 2.25rem 0;
     }
+    .banner ul { margin: 0.5rem 0 0 0; }
     h2 {
       font-size: 1.25rem;
       margin: 2.5rem 0 0.85rem 0;
@@ -135,8 +136,15 @@
     <p class="updated">(last updated 2026-06-07)</p>
 
     <div class="banner">
-      <strong>Design in progress.</strong> This page presents the big picture and
-      the planned staging. The fitting runs themselves have not started.
+      <strong>Rationale for stopping.</strong> I wanted to observe how well an LLM
+      can &ldquo;one-shot&rdquo; a complex project, identify the LLM&rsquo;s limits, and then
+      design a system to compensate for the limits. I stopped after making the
+      following realizations:
+      <ul>
+        <li>The LLM token cost for each run was astronomical (and wasteful).</li>
+        <li>The LLM models were updated frequently, and the level of hand-holding each model needed differed vastly.</li>
+        <li>Most detrimentally, even in the best case where the harness delivers a flawless report, <em>understanding</em> is lost along the way. The purpose of a pharmacometric analysis is to turn numbers into understanding that informs dosing decisions; a finished report hands me more numbers, not more insight.</li>
+      </ul>
     </div>
 
 <!-- INTRODUCTION -->
