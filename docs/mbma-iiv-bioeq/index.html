@@ -3064,7 +3064,6 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">Meta-analysis of within-subject variability
 in published bioequivalence studies</h1>
-<h3 class="subtitle">INTERIM read-out — data extraction in progress</h3>
 <h4 class="author">Jerry Hu</h4>
 <h4 class="date">2026-06-02</h4>
 
@@ -3152,8 +3151,7 @@ human-fetch of paywalled articles. This is a deliberate scope decision
 limitation: the analyzed set is biased toward open-access reporting. Of
 the PubMed records that advanced to full-text, <strong>301 have
 retrievable open full text</strong> (the extraction denominator);
-<strong>108 have been extracted so far</strong> in this interim
-cut.</li>
+<strong>108 were extracted</strong> before the project was shelved.</li>
 </ul>
 </div>
 <div id="per-study-extraction" class="section level2" number="2.2">
@@ -3196,9 +3194,7 @@ stated GMR, α, and target power:</p>
 \]</span></p>
 <p>the inversion uses the conventional two one-sided-tests (TOST)
 sample-size function (<code>PowerTOST</code>); the recovered value is
-validated on studies that state the planning CV explicitly. <em>This
-interim read-out pools only the directly-stated planning CVs; the
-inverted set is validated but not yet folded into the headline.</em></p>
+validated on studies that state the planning CV explicitly. <em>The pooled estimates use only the directly stated planning CVs; the inverted set was validated but not folded into the headline.</em></p>
 </div>
 <div id="planning-gap-and-its-consequence" class="section level2" number="2.5">
 <h2><span class="header-section-number">2.5</span> Planning gap and its
@@ -3244,7 +3240,7 @@ under-planned tail that erodes power.</li>
 estimates</h2>
 <table class="table table-striped table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
 <caption>
-Interim point estimates — planning vs realized.
+Point estimates — planning vs realized.
 </caption>
 <thead>
 <tr>
@@ -3341,7 +3337,7 @@ BE pass rate
 <tfoot>
 <tr>
 <td style="padding: 0; " colspan="100%">
-<span style="font-style: italic;">Note:</span> <sup></sup> Interim: 15
+<span style="font-style: italic;">Note:</span> <sup></sup> 15
 studies / 27 PK-metric comparisons of 108 papers extracted. Descriptive
 pooling (geometric mean), not inverse-variance weighted.
 </td>
@@ -3359,7 +3355,7 @@ the planning gap.</p>
 <h2><span class="header-section-number">3.3</span> Per-study detail</h2>
 <table class="table table-striped table-hover table-condensed" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-Analyzable studies (interim): assumed vs realized CV, ratio, GMR,
+Analyzable studies: assumed vs realized CV, ratio, GMR,
 realized power.
 </caption>
 <thead>
@@ -4266,24 +4262,21 @@ pass
 </table>
 </div>
 </div>
-<div id="interim-limitations" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Interim
-limitations</h1>
+<div id="limitations" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Limitations</h1>
 <ul>
-<li><strong>Small analyzable N.</strong> Only studies that
-<em>state</em> a planning CV<sub>w</sub> enter the pooled estimate at
-this stage; assumed-CV recovery by inversion (which roughly triples the
-set) is validated but not yet folded into the headline. Estimates will
-shift.</li>
-<li><strong>Descriptive pooling.</strong> No inverse-variance weighting
-or between-study heterogeneity model yet (deferred to
-<code>04-analyze</code>); each comparison counts equally.</li>
+<li><strong>Small analyzable N.</strong> Only the 15 studies (27
+comparisons) that <em>state</em> a planning CV<sub>w</sub> enter the
+pooled estimate. Recovering the assumed CV by inversion would roughly
+triple the set; this was validated but not applied to the headline
+estimate.</li>
+<li><strong>Descriptive pooling.</strong> Estimates are descriptive
+(geometric mean); there is no inverse-variance weighting or
+between-study heterogeneity model, and each comparison counts
+equally.</li>
 <li><strong>Image-locked tables</strong> and non-2×2 designs are
-excluded here; selection toward cleanly-reported studies is
+excluded, so selection toward cleanly reported studies is
 possible.</li>
-<li><strong>Method label provisional.</strong> Whether the hierarchical
-“MBMA” layer materializes is a post-extraction decision; the slug may be
-renamed <code>ma-</code> before final publish.</li>
 </ul>
 </div>
 
